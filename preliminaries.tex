@@ -6,16 +6,16 @@ Welcome to $\CC$, the set of numbers over which we will assume to be working wit
 \[
     \CC = \{ a + b i : a, b, \in \RR, i^2 = -1\}
 \]
-This will serves our purposes just fine. $\RR$, of course, is the normal field of real numbers, which I hope we're all familiar with. If we were super concerned about rigor, this loose definition can be made into a more rigorous construction of $\CC$, but we'll refrain from doing so here.
+This will serves our purposes just fine. $\RR$, of course, is the normal field of real numbers, which I hope we're all familiar with. If we were super concerned about rigor, this loose definition can be made into a more rigorous construction of $\CC$, but we'll refrain from doing so here. We will assume some standard things about $\RR$, that being that $\RR$ is a field with a total ordering, and is complete (in particular, the completion of the rational numbers $\QQ$ under the standard Euclidean metric).
 
 We will endow the complex numbers with the standard operations of a field (addition and multiplication), and we'll assume you know how these operations work already, but just for the sake of defining it:
 \[(a + bi) + (c + di) = (a + c) + (b+ d) i.\]
 \[(a + bi) \cdot (c + di) = (ac - bd) + (ad + bd)i. \]
-Every complex number $z = a + bi$ also has a \textit{conjugate}, $\bar z = a - bi$.
+Every complex number $z = a + bi$ also has a \textit{conjugate}, $\bar z = a - bi$. $a$ is said to be the \textit{real part} of $z$, $\Re(z)$, and $b$ is the \textit{imaginary part} of $z$, $\Im(z)$.
 
-I would like to focus more on endowing the complex numbers with a geometric interpretation as being similar to $\RR^2$ by plotting them on the plane, like so:
+I would like to place the main focus of this sectionon endowing the complex numbers with a geometric interpretation as being similar to $\RR^2$ by plotting them on the plane, like so:
 %% diagram - complex plane w/ arbitrary complex number, stuff labeled
-In this case, we see that we can also represent any complex number $z$ in a polar form -- in particular, in terms of its distance to the origin, and the angle it makes with the positive real axis. We can thus write
+This allows us to essentially interpret addition in $\CC$ as essentially the same as vector addition in $\RR^2$, except the imaginary part carries the second component. In this case, we see that we can also represent any complex number $z$ in a polar form -- in particular, in terms of its distance to the origin, and the angle it makes with the positive real axis. We can thus write
 \[
     z = r (\cos \theta + i \sin \theta),
 \]
@@ -25,17 +25,17 @@ Before discussing the argument further, we first establish \textit{Euler's Formu
 \[
     e^{i\theta} = \cos \theta + i \sin \theta = \cis \theta.
 \]
-I personally strongly favor the exponential form over the cis form, unless I can't avoid it.
+I personally strongly favor the exponential form over the cis form, unless I can't avoid it. I won't get into the weeds with what an appropriately rigorous proof of this looks like -- if we take $\sin$ and $\cos$ to be defined based on geometry and the unit circle, this is a bit of a nontrivial task, but other definitions based on their (intended) Taylor series (or equivalently, as solutions to a certain differential equation) make this statement very clearly true. (Of course, such Taylor series have to be shown to converge and stuff -- and also other nice properties you might want out of $\sin$ and $\cos$ are not so obvious, i.e. periodicity.) This is all very technical and we don't really care, it's the real analyst's job to figure it out.
 
-There are many ways to show that this is true depending on what initial conditions one has -- we could do this by simply employing a Taylor series expansion and comparing terms. Another way that might be more convincing if we don't believe we should be using Taylor over the complex field is through a differential equations approach. Note that
-\[
-    \dv{}{\theta} \cis \theta = -\sin \theta + i \cos \theta = i(i \sin \theta + \cos \theta) = i \cis \theta
-\]
-Now, for the definition of $e^z$ such that $e^z$ is the unique solution to the initial value problem $y' = y$, $y(0) = 1$, we can infer from the chain rule that $e^{iz}$ satisfies this equation, proving the statement.
+%There are many ways to show that this is true depending on what initial conditions one has -- we could do this by simply employing a Taylor series expansion and comparing terms. Another way that might be more convincing if we don't believe we should be using Taylor over the complex field is through a differential equations approach. Note that
+%\[
+%    \dv{}{\theta} \cis \theta = -\sin \theta + i \cos \theta = i(i \sin \theta + \cos \theta) = i \cis \theta
+%\]
+%Now, for the definition of $e^z$ such that $e^z$ is the unique solution to the initial value problem $y' = y$, $y(0) = 1$, we can infer from the chain rule that $e^{iz}$ satisfies this equation, proving the statement.
 
 Geometrically, this statement allows us to think of complex number multiplication in a nice way, if we choose to work in polar coordinates. If for two complex numbers $z$ and $w$ we have $z = r_1 e^{i\theta_1}$ and $w = r_2 e^{i\theta_2}$, we have that $zw = r_1 r_2 e^{i (\theta_1 + \theta_2)}$, i.e. the argument adds and the magnitudes multiply, by nature of the exponential properties.
 
-Okay, but back to the argument. The argument of $z$ is not a function, because of the periodicity in $\sin$ and $\cos$: $\cis 2\pi = e^{2i \pi} = 1$, so that means that if $z = re^{i\theta}$, $z$ is also $re^{i(\theta + 2pi)}$. As stated here, the argument can take on infinitely many values. In order to make this a function, we let the \textit{principal value} of the argument function be the value $\theta \in (-\pi, \pi]$ such that $z = re^{i\theta}$. We denote this argument $\theta$ as $\Arg(z)$, which makes this an actual function. This choice of the range of $\Arg(z)$ may seem somewhat arbitrary, and it will have \textbf{immense} consequences and implications for us down the line, but it also turns out the choice of how the range of $\Arg(z)$ is defined will not matter too much, and this choice will just be nicer for us to work with.
+Okay, but back to the argument. The argument of $z$ is not a function, because of the periodicity in $\sin$ and $\cos$: $\cis 2\pi = e^{2i \pi} = 1$, so that means that if $z = re^{i\theta}$, $z$ is also $re^{i(\theta + 2pi)}$. As stated here, the argument can take on infinitely many values. In order to make this a function, we let the \textit{principal value} of the argument function be the value $\theta \in (-\pi, \pi]$ such that $z = re^{i\theta}$. \textbf{(This is not necessarily a standard choice! This is the choice that I am familiar with, however.)} We denote this argument $\theta$ as $\Arg(z)$, which makes this an actual function. This choice of the range of $\Arg(z)$ may seem somewhat arbitrary, and it will have \textbf{immense} consequences and implications for us down the line, but it also turns out the choice of how the range of $\Arg(z)$ is defined will not matter too much, and this choice will just be nicer for us to work with.
 
 This issue with the argument carries over also to taking roots of complex numbers/taking a complex number to a non-integer power. For simplicity, let's work with the number $w = -1 + \sqrt{3} i = 2 e^{i\frac{2\pi}{3}}$. Notice that we could square it, cube it, raise it to the $n$th power, etc. however we wish:
 \[
