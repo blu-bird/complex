@@ -2,6 +2,8 @@
 Analysis, of course, is a rigorous discipline that gives us a lot of the structure underlying calculus. However, the point of this first section is to be less concerned with the rigor and is more focused on introducing ourselves to some of the common actors.
 
 \subsection{The Stage: The Complex Numbers}
+% basic operations, modulus, argument, 
+
 Welcome to $\CC$, the set of numbers over which we will assume to be working with in the entirety of these notes! We will take the following as our definition of $\CC$:
 \[
     \CC = \{ a + b i : a, b, \in \RR, i^2 = -1\}
@@ -13,15 +15,21 @@ We will endow the complex numbers with the standard operations of a field (addit
 \[(a + bi) \cdot (c + di) = (ac - bd) + (ad + bd)i. \]
 Every complex number $z = a + bi$ also has a \textit{conjugate}, $\bar z = a - bi$. $a$ is said to be the \textit{real part} of $z$, $\Re(z)$, and $b$ is the \textit{imaginary part} of $z$, $\Im(z)$.
 
-I would like to place the main focus of this sectionon endowing the complex numbers with a geometric interpretation as being similar to $\RR^2$ by plotting them on the plane, like so:
-%% diagram - complex plane w/ arbitrary complex number, stuff labeled
+I would like to place the main focus of this section on endowing the complex numbers with a geometric interpretation as being similar to $\RR^2$ by plotting them on the plane, like so:
+
+%%
+%% image here 
+%%
+
 This allows us to essentially interpret addition in $\CC$ as essentially the same as vector addition in $\RR^2$, except the imaginary part carries the second component. In this case, we see that we can also represent any complex number $z$ in a polar form -- in particular, in terms of its distance to the origin, and the angle it makes with the positive real axis. We can thus write
 \[
     z = r (\cos \theta + i \sin \theta),
 \]
-where $r$ is a non-negative real number, and $\theta$ is any real number. We call $r$ the \textit{modulus} (or magnitude, or norm) of $z$, $|z|$, and $\theta$ the \textit{argument} of $z$, $\arg z$.
+where $r$ is a non-negative real number, and $\theta$ is any real number. We call $r$ the \textit{absolute value}, (or \textit{modulus}, magnitude, or norm) of $z$, $|z|$, and $\theta$ the \textit{argument} of $z$, $\arg z$.
 
-Before discussing the argument further, we first establish \textit{Euler's Formula} (one of them) which establishes that
+We can calculate the modulus and argument similarly to how it's done when dealing with polar coordinates -- if $z = a + bi$, $|z| = (a^2 + b^2)^{\frac 12}$, and $\tan(\arg z) = \frac b a$. We can also say that $|z|^2 = \bar z \cdot z$, as a useful corollary. Moreover, the norm satisfies the \textit{triangle inequality}, so $|z + w| \leq |z| + |w|$, and as a corollary we also have the useful inequality $||z| - |w||  \leq |z - w|$.
+
+The modulus will (like in real analysis) be used extensively later when we begin discussing the actual analysis. But for now, we'll discuss the argument further especially in relation to its behavior on $\CC$. We first establish \textit{Euler's Formula} (one of them) which establishes that
 \[
     e^{i\theta} = \cos \theta + i \sin \theta = \cis \theta.
 \]
@@ -35,7 +43,7 @@ I personally strongly favor the exponential form over the cis form, unless I can
 
 Geometrically, this statement allows us to think of complex number multiplication in a nice way, if we choose to work in polar coordinates. If for two complex numbers $z$ and $w$ we have $z = r_1 e^{i\theta_1}$ and $w = r_2 e^{i\theta_2}$, we have that $zw = r_1 r_2 e^{i (\theta_1 + \theta_2)}$, i.e. the argument adds and the magnitudes multiply, by nature of the exponential properties.
 
-Okay, but back to the argument. The argument of $z$ is not a function, because of the periodicity in $\sin$ and $\cos$: $\cis 2\pi = e^{2i \pi} = 1$, so that means that if $z = re^{i\theta}$, $z$ is also $re^{i(\theta + 2pi)}$. As stated here, the argument can take on infinitely many values. In order to make this a function, we let the \textit{principal value} of the argument function be the value $\theta \in (-\pi, \pi]$ such that $z = re^{i\theta}$. \textbf{(This is not necessarily a standard choice! This is the choice that I am familiar with, however.)} We denote this argument $\theta$ as $\Arg(z)$, which makes this an actual function. This choice of the range of $\Arg(z)$ may seem somewhat arbitrary, and it will have \textbf{immense} consequences and implications for us down the line, but it also turns out the choice of how the range of $\Arg(z)$ is defined will not matter too much, and this choice will just be nicer for us to work with.
+Okay, but back to the argument. The argument of $z$ is not a function, because of the periodicity in $\sin$ and $\cos$: $\cis 2\pi = e^{2i \pi} = 1$, so that means that if $z = re^{i\theta}$, $z$ is also $re^{i(\theta + 2\pi)}$. As stated here, the argument can take on infinitely many values. In order to make this a function, we let the \textit{principal value} of the argument function be the value $\theta \in (-\pi, \pi]$ such that $z = re^{i\theta}$. \textbf{(This is not necessarily a standard choice! This is the choice that I am familiar with, however.)} We denote this argument $\theta$ as $\Arg(z)$, which makes this an actual function. This choice of the range of $\Arg(z)$ may seem somewhat arbitrary, and it will have \textbf{immense} consequences and implications for us down the line, but it also turns out the choice of how the range of $\Arg(z)$ is defined will not matter too much, and this choice will just be nicer for us to work with.
 
 This issue with the argument carries over also to taking roots of complex numbers/taking a complex number to a non-integer power. For simplicity, let's work with the number $w = -1 + \sqrt{3} i = 2 e^{i\frac{2\pi}{3}}$. Notice that we could square it, cube it, raise it to the $n$th power, etc. however we wish:
 \[
@@ -85,113 +93,13 @@ This is a horrific issue, especially since we should expect such a simple functi
 
 Our convention that we adopt -- real numbers raised to real, non-integer powers will be treated like the principal roots, and complex numbers placed under radical signs will be implicitly assumed to be principal. Raising a general complex number enclosed in parentheses, however, to a non-integer power will produce the multitude of solutions that we see here.
 
-This is a choice we have to make, and it will be one with fairly significant consequences. We will explore what we have done to the complex plane with the Argument once we have more tools to visualize this.
-% basic operations, modulus, argument, 
+This is a choice we have to make, and it will be one with fairly significant consequences. We will explore what we have done to the complex plane with the Argument once we have more tools to visualize this, but first we will discuss more of the common functions.
 
 
-\section{How (Not) to Graph In Four Dimensions}
-Now that we have the fundamentals of the complex number system under our belts, it's time to discuss functions on the complex numbers. All of the following are functions on the complex numbers:
-\[
-    f(z) = z^2 \quad f(x+iy) = 3y + 5ix \quad f(z) = \Log |z| + i \Arg(\bar{z}) \quad f(z) = \bar{z}^2 + 3z^2
-\]
-
-We would like a way to visualize all of these functions. The issue, however, that a traditional approach that shows the domain of a two-dimensional variable mapping to a two-dimensional output would require some four-dimensional graph paper, which unfortunately would not be useful on this two-dimensional page. We have to be more clever.
-
-We got around this difficulty when visualizing functions of two variables by plotting the dependent variable on the $z$-axis and varying the other two variables along the $x$- and $y$-axes. From this, we might think to simply have the complex plane as our input, and graph the real and imaginary parts of the function separately as three-dimensional surfaces. Thus, for a function $f$, we split it into its real and imaginary parts, $u(x,y)$ and $v(x,y)$, respectively, both of which are a function of two variables. Below, we see a dissection of $f(z) = z^2 = u(x,y) + i v(x,y) = x^2-y^2 + 2ixy$ into $u(x,y) = x^2 - y^2$ and $v(x,y) = 2xy$:
-\begin{center}
-    \includegraphics[scale=0.5]{images/rezsqr.png}
-    \includegraphics[scale=0.5]{images/imzsqr.png}
-\end{center}
-These graphs reveal a lot about how nice $u$ and $v$ are, but not a lot about the actual function $f$ itself. Sure, these will have their use/intuition when we investigate $u$ and $v$, but we need to be even more clever to get a nice visual representation of $f$.
-
-Another idea is to instead graph the domain and range of $f$ separately -- that is, feed in a selected subset of $\CC$, and let Mathematica tell us where that maps to. That seems fairly reasonable! Below, we consider the image of the rectangle bounded by $1, 2, 1+3i, 2+3i$:
-\begin{center}
-    \includegraphics[scale=0.5]{images/domzsqr.png}
-    \includegraphics[scale=0.5]{images/ranzsqr.png}
-\end{center}
-Here, we see more geometrically what $z^2$ is doing -- it's doubling the arguments and rotating it, all the while the modulus is being squared and being pulled away from the origin. This captures the essence of the squaring function more completely than how our first method pulled the real and imaginary parts apart.
-
-Notice also that I drew lines in my domain that represented lines of constant real/imaginary parts, and Mathematica graciously shows where these lines map to. While they don't remain straight, these curves still remain perpendicular to each other, which is a bit unexpected!
-
-We go again, with the rectangle with vertices $-1+i, -1-i, 2+i, 2-i$:
-\begin{center}
-    \includegraphics[scale=0.5]{images/domzsqr1.png}
-    \includegraphics[scale=0.5]{images/ranzsqr1.png}
-\end{center}
-Let's see what happens if we were to walk around the image of the boundary of our domain in the output space. $2+i$ goes to $3+4i$, which corresponds to the top-right corner of the figure. We keep walking, keeping the interior to the left, until we reach the image of $-1+i = -2i$, past the other corner in the figure. We walk inside the figure, up to the other corner, and then overlap our own interior by walking to $3-4i$ and back up to the top-right. The orientation of the interior has still been preserved, and so has the angles between the lines, for the most part (except at 0). Functions which preserve angles and orientation in this manner are called \textit{conformal}. We'll discuss more conformal mappings in the following section.
-
-Here's a mapping that's decidedly \textit{not} conformal -- $f(x + iy) = -y + xyi$:
-\begin{center}
-    \includegraphics[scale=0.5]{images/domzsqr.png}
-    \includegraphics[scale=0.5]{images/ranzsqr2.png}
-\end{center}
-This, clearly, doesn't at all preserve angles by inspection, so not all functions $f(x+iy)$ with given $u(x, y)$ and $v(x,y)$ are conformal. We'll talk about what functions are and aren't conformal next time.
-
-Finally, we turn to a fairly unorthodox, psychadelic method -- color maps. Normally, to establish a sort of baseline for ourselves, we first ``paint'' the entire complex plane with colors, varying hues for different arguments and making the saturation/brightness of the colors closer to the origin. We're not as concerned with the modulus, so we're just going to color the plane with the rainbow like so:
-\begin{center}
-    \includegraphics[scale=0.25]{images/colorbase.png}
-\end{center}
-
-For reference, the positive real axis is red, the positive imaginary axis is light green, the negative real axis is a light aqua, and the negative imaginary axis is purple.
-
-To read these maps, the color of each point of the plane shows what argument the point maps to. Here's a color map of $f(z) = z^2$:
-\begin{center}
-    \includegraphics[scale=0.27]{images/colorzsqr.png}
-\end{center}
-Notice how the rainbow is repeated twice around the origin, as the we get to cycle through all of the different arguments twice. Here's $e^z$, and $\sin z$ for reference:
-\begin{center}
-    \includegraphics[scale=0.27]{images/colorez.png}
-    \includegraphics[scale=0.27]{images/colorsinz.png}
-\end{center}
-Note that the stripes on $e^z$ come from the periodicity every $2\pi$ in $e^ir$ for $r$ real, and we can see the regular periodicity in the $\sin$ function directly.
-
-These color maps are going to be useful for visualizing discontinuities, which we will discuss later.
-% conformality 
-
-\section{Keeping Up With the M\"{o}biuseseses}
-% riemann sphere and fractional linear transformations
-M\"{o}bius transformations, or fractional linear transformations (FLTs), are worth studying as a sidenote here they are interesting conformal mappings of regions. These were discussed in HCSSiM's PJ 5, but I'll reiterate some of the main points here.
-
-FLTs are functions of the form $f(z) = \frac{az+b}{cz+d}$, where $ad - bc \neq 0$ as to not make the function constant. They are compositions of translations ($f(z) : z \rightarrow z + c, c \in \CC$), rotations/dilations ($f(z) : z \rightarrow rz, r \in \CC$) and a reciprocation $\left(f(z) : z \rightarrow \frac{1}{z}\right)$. Because of this, they can established to be conformal by how they are constructed, geometrically (regular geometric inversion preserves angles, but not orientation... see if you can work this one out!).
-
-In particular, FLTs are nice because they send circles and lines to circles and lines. This is true by construction for translations, rotations, and dilations, but reciprocations require breaking the function down into its real and imaginary parts and computing this explicitly.
-
-Currently, the point $z = - \frac{d}{c}$ is a pole, unless we work in the \textit{one-point compactification of the complex plane}, which is just fancy math speak for ``adding $\infty$ to $\CC$ to complete the plane.'' This also allows us to have $\frac{a}{c}$ in our range, if we're allowed to plug in the point at infinity into our FLTs.
-
-FLTs are fixed by three points -- we can always construct transformations that send the numbers $z_1$, $z_2$, and $z_3$ to $0, \infty$, and 1, respectively, like so:
-\[
-    f(z) = \frac{z_3-z_2}{z_3-z_1} \cdot \frac{z-z_1}{z-z_2}
-\]
-That means if we want to generally send $z_1 \rightarrow w_1$, $z_2 \rightarrow w_2$, and $z_3 \rightarrow w_3$, we can construct $f(z)$ such that $z_1 \rightarrow 0$, $z_2 \rightarrow \infty$, and $z_3 \rightarrow 1$, as well constructing $g(z)$ such that $w_1 \rightarrow 0$, $w_2 \rightarrow \infty$, and $w_3 \rightarrow 1$. Then, we can take $h(z) = g^{-1}(f(z))$ to get the unique transformation we want, which shows that transformations are fixed by three points.
-
-With all of that summary out of the way, I'm most interested in talking about looking at the domain/range graphs when it comes to the FLTs. In all of the following examples, I'll provide the domain, and its output range. Note that all of these are conformal -- they preserve orientation and angles, even if they don't look like it! A good way to check orientation -- if you walk around the boundary counterclockwise (including through infinity), the interior should be to the left.
-
-Okay, here are the pictures, and all of them are pretty wacky.  I tried to make Mathematica as unhappy as possible by using the reciprocation as much as possible, so these will look weird:
-\begin{center}
-    1. $f(z) = \frac{z-1}{z}$ on unit disk $|z| \leq 1$: \\
-    \includegraphics[scale=0.3]{images/mobius1dom.png}
-    \includegraphics[scale=0.3]{images/mobius1ran.png}
-\end{center}
-\begin{center}
-    2. $f(z) = \frac{z+1}{-z+1}$ on unit disk $|z| \leq 1$: \\
-    \includegraphics[scale=0.3]{images/mobius1dom.png}
-    \includegraphics[scale=0.3]{images/mobius2ran.png}
-\end{center}
-\begin{center}
-    3. $f(z) = \frac{1}{z}$ on square -- $\Re(z) \in [-1,1], \Im(z) \in [-1,1]$: \\
-    \includegraphics[scale=0.3]{images/mobius3dom.png}
-    \includegraphics[scale=0.3]{images/mobius3ran.png}
-\end{center}
-\begin{center}
-    4. $f(z) = (1+i)\frac{z-1}{z-i}$ on square -- $\Re(z) \in [0,1], \Im(z) \in [0,4]$: \\
-    \includegraphics[scale=0.3]{images/mobius4dom.png}
-    \includegraphics[scale=0.3]{images/mobius4ran.png}
-\end{center}
-The third example is an example of where Mathematica tries to connect the different infinities encountered near zero, and it ends up overlapping one of the quadrants. I'm not sure how to fix this, because the region is really only supposed to be the plane, minus the cloverleaf in the middle. Work it out for yourself to verify this! Try mapping each of these (directed) segments seperately, remembering to keep the interior to the left. :)
-\section{Completing the Calculator}
+\subsection{The Famous Players: Calculator Functions}
 % exp, sin, cos, sinh, cosh, tanh, Log, Arcsin, Arccos, Arctan
 
-Recall the exponential function $e^z$, which we originally took as the function that satisfies the differential equation $y' = y$ and initial condition $y(0) = 1$. We can equivalently define it over all $\CC$ in terms of its Taylor series $e^z = 1 + z + \frac{z^2}{2!}  + \frac{z^3}{3!} + \cdots$, which is convergent everywhere, but we're not really concerned with the underpinnings of this function from a qualitative analysis for right now. What's more important to us right now is how many other functions the exponential function gives rise to, and why it's so important.
+Recall the exponential function $e^z$, which we can equivalently define over all $\CC$ as the series $e^z = 1 + z + \frac{z^2}{2!}  + \frac{z^3}{3!} + \cdots = \sum_{k=0}^\infty \frac{z^k}{k!}$, which is convergent everywhere, but we're not really concerned with the underpinnings of this function from a qualitative analysis for right now. What's more important to us right now is how many other functions the exponential function gives rise to, in particular many of the common transcendental functions you may already be used to.
 
 The first of these are $\sin$ and $\cos$ -- these are real functions that can be generalized using Euler's Formula to complex numbers:
 \[
@@ -244,7 +152,7 @@ We can also talk about the inverses of these functions! Define $w = \log z$ as a
 \]
 (Here, I distinguish between the real-valued $\ln x : \RR \to \RR$ and the complex $\log z$ for the logarithm, which is a distinction I will continue to use for clarity.)
 
-This is a problem, which once again stems from the fact that numbers have infinitely many possible arguments, and that multiplying numbers by $e^{2\pi n}$ doesn't change them. Again, to remedy this, we present the \textit{principal log} function, $\Log (z)$, which forces the number to be written with a principal argument before the logarithm is taken. Hence,
+This is a problem, which once again stems from the fact that numbers have infinitely many possible arguments, and that multiplying numbers by $e^{2\pi i n}$ doesn't change them. Again, to remedy this, we present the \textit{principal log} function, $\Log (z)$, which forces the number to be written with a principal argument before the logarithm is taken. Hence,
 \[
     \Log 2 = \ln 2,
 \]
@@ -267,16 +175,77 @@ where everything is done principally. This allows us (finally!) to take the $\Ar
     \Arcsin 2 = -i \Log(2i + \sqrt{1-4}) = -i \Log\left(2+\sqrt{3}i\right)
 \]
 This, for the most part, addresses most of the functions on your handy-dandy scientific calculator that it has buttons for, in all of $\CC$ -- all stemming from the exponential function.
-\section{Ripped to Pieces}
+
+\subsection{How (Not) to Graph In Four Dimensions}
+Now that we have the fundamentals of the complex number system under our belts, it's time to discuss functions on the complex numbers. All of the following are functions on the complex numbers:
+\[
+    f(z) = z^2 \quad f(x+iy) = 3y + 5ix \quad f(z) = \Log |z| + i \Arg(\bar{z}) \quad f(z) = \bar{z}^2 + 3z^2
+\]
+
+We would like a way to visualize all of these functions. The issue, however, that a traditional approach that shows the domain of a two-dimensional variable mapping to a two-dimensional output would require some four-dimensional graph paper, which unfortunately would not be useful on this two-dimensional page. We have to be more clever.
+
+We got around this difficulty when visualizing functions of two variables by plotting the dependent variable on the $z$-axis and varying the other two variables along the $x$- and $y$-axes. From this, we might think to simply have the complex plane as our input, and graph the real and imaginary parts of the function separately as three-dimensional surfaces. Thus, for a function $f$, we split it into its real and imaginary parts, $u(x,y)$ and $v(x,y)$, respectively, both of which are a function of two variables. Below, we see a dissection of $f(z) = z^2 = u(x,y) + i v(x,y) = x^2-y^2 + 2ixy$ into $u(x,y) = x^2 - y^2$ and $v(x,y) = 2xy$:
+\begin{center}
+    \includegraphics[scale=0.5]{images/rezsqr.png}
+    \includegraphics[scale=0.5]{images/imzsqr.png}
+\end{center}
+These graphs reveal a lot about how nice $u$ and $v$ are, but not a lot about the actual function $f$ itself. Sure, these will have their use/intuition when we investigate $u$ and $v$, but we need to be even more clever to get a nice visual representation of $f$.
+
+Another idea is to instead graph the domain and range of $f$ separately -- that is, feed in a selected subset of $\CC$, and let Mathematica tell us where that maps to. That seems fairly reasonable! Below, we consider the image of the rectangle bounded by $1, 2, 1+3i, 2+3i$:
+\begin{center}
+    \includegraphics[scale=0.5]{images/domzsqr.png}
+    \includegraphics[scale=0.5]{images/ranzsqr.png}
+\end{center}
+Here, we see more geometrically what $z^2$ is doing -- it's doubling the arguments and rotating it, all the while the modulus is being squared and being pulled away from the origin. This captures the essence of the squaring function more completely than how our first method pulled the real and imaginary parts apart.
+
+Notice also that I drew lines in my domain that represented lines of constant real/imaginary parts, and Mathematica graciously shows where these lines map to. While they don't remain straight, these curves still remain perpendicular to each other, which is a bit unexpected!
+
+We go again, with the rectangle with vertices $-1+i, -1-i, 2+i, 2-i$:
+\begin{center}
+    \includegraphics[scale=0.5]{images/domzsqr1.png}
+    \includegraphics[scale=0.5]{images/ranzsqr1.png}
+\end{center}
+Let's see what happens if we were to walk around the image of the boundary of our domain in the output space. $2+i$ goes to $3+4i$, which corresponds to the top-right corner of the figure. We keep walking, keeping the interior to the left, until we reach the image of $-1+i = -2i$, past the other corner in the figure. We walk inside the figure, up to the other corner, and then overlap our own interior by walking to $3-4i$ and back up to the top-right. The orientation of the interior has still been preserved, and so has the angles between the lines, for the most part (except at 0). Functions which preserve angles and orientation in this manner are called \textit{conformal}. We'll discuss more about conformal mappings later.
+
+Here's a mapping that's decidedly \textit{not} conformal -- $f(x + iy) = -y + xyi$:
+\begin{center}
+    \includegraphics[scale=0.5]{images/domzsqr.png}
+    \includegraphics[scale=0.5]{images/ranzsqr2.png}
+\end{center}
+This, clearly, doesn't at all preserve angles by inspection, so not all functions $f(x+iy)$ with given $u(x, y)$ and $v(x,y)$ are conformal. We'll talk about what functions are and aren't conformal next time.
+
+Finally, we turn to a fairly unorthodox, psychadelic method -- color maps. Normally, to establish a sort of baseline for ourselves, we first ``paint'' the entire complex plane with colors, varying hues for different arguments and making the saturation/brightness of the colors closer to the origin. We're not as concerned with the modulus, so we're just going to color the plane with the rainbow like so:
+\begin{center}
+    \includegraphics[scale=0.25]{images/colorbase.png}
+\end{center}
+
+For reference, the positive real axis is red, the positive imaginary axis is light green, the negative real axis is a light aqua, and the negative imaginary axis is purple.
+
+To read these maps, the color of each point of the plane shows what argument the point maps to. Here's a color map of $f(z) = z^2$:
+\begin{center}
+    \includegraphics[scale=0.27]{images/colorzsqr.png}
+\end{center}
+Notice how the rainbow is repeated twice around the origin, as the we get to cycle through all of the different arguments twice. Here's $e^z$, and $\sin z$ for reference:
+\begin{center}
+    \includegraphics[scale=0.27]{images/colorez.png}
+    \includegraphics[scale=0.27]{images/colorsinz.png}
+\end{center}
+Note that the stripes on $e^z$ come from the periodicity every $2\pi$ in $e^ir$ for $r$ real, and we can see the regular periodicity in the $\sin$ function directly.
+
+These color maps are going to be useful for visualizing discontinuities, which we will discuss later.
+% conformality 
+
+
+\subsection{Tears in the Fabric: Branch Cuts and Points}
 % b r a n c h c u t s 
 
-Recall that in order to make the argument a function, we limited the range of the Argument such that $Arg(z) \in (-\pi, \pi]$. In a sense, we had taken a large cleaver and cut off the other infinitely many values for the argument of a number. At the places where $\Arg(z) = \pi$, then, we get an infinite discontinuity in the function all along the negative real axis, and at 0. This discontinuous ``cut'' in the function we call a \textit{branch cut}. Strange, strange things happen because of this choice, and we'll explore this now with the color maps.
+Recall that in order to make the argument a function, we limited the range of the Argument such that $Arg(z) \in (-\pi, \pi]$. In a sense, we had cut off the other infinitely many values for the argument of a number. At the places where $\Arg(z) = \pi$, then, we get a discontinuity in the function all along the negative real axis, and at 0. This discontinuous ``cut'' in the function we call a \textit{branch cut}\footnote{In particular, the definition of a branch cut is a curve where the ``flattening'' of the multivalued function onto a single branch is discontinuous.}. Strange, strange things happen because of this choice, and we'll explore this now with the color maps.
 
 Remember with the $\Log$ function, we wrote $\Log(z) = \ln|z| + i\Arg(z)$. Since the Argument function has a branch cut all along the negative real axis, we should also see a branch cut all along the negative real axis here -- and indeed, we do, looking at the color map of $\Log(z)$:
 \begin{center}
     \includegraphics[scale=0.27]{images/colorlogz.png}
 \end{center}
-The branch cut here is displayed \textit{very} prominently in the sharp discontinuity in color crossing the negative real axis. Cuts can sometimes start and end at \textit{branch points}, and in this case, 0 is a branch point of $\Log(z)$. One subtlety to note is that a branch point must be present in every branch of the multi-valued function -- so some points that look like branch points might actually be illusory, which can be very confusing. In general, a good way to identify possible branch points is to ask where one is taking a $\Log$ or a non-integer power of 0 or $\infty$, and \textit{cuts always occur when one is taking a $\Log$ or non-integer powers of negative reals}.
+The branch cut here is displayed \textit{very} prominently in the sharp discontinuity in color crossing the negative real axis. Cuts can sometimes start and end at \textit{branch points}, and in this case, 0 is a branch point of $\Log(z)$\footnote{The formal definition of a branch point is a point where winding an arbitrarily small loop around it once brings you to a different output value compared to the starting point, but it's a hard to define this super rigorously without some sort of topology and analysis machinery.}. One subtlety to note is that a branch point must be present in every branch of the multi-valued function -- so some points that look like branch points as they are the endpoints of a branch cut, which can be very confusing. In general, a good way to identify possible branch points is to ask where one is taking a $\Log$ or a non-integer power of 0 or $\infty$, and \textit{cuts always occur when one is taking a $\Log$ or non-integer powers of negative reals}.
 
 We can use the color maps to look at the cuts in functions that look similar, but actually exhibit very different behaviors. For example, consider $\sqrt{z^2-1}$ and $z \sqrt{1-\frac{1}{z^2}}$:
 \begin{center}
