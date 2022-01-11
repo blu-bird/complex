@@ -2,29 +2,109 @@
 
 We begin our foray into complex analysis and start with a discussion of the smooth functions on $\CC$. We'll soon see that these are actually incredibly nice!
 
-(For now, limits, continuity, topology are skipped in these notes
-
 \subsection{Topology of the Complex Numbers}
-It's literally just like $\RR^2$, consult Hubbard.
-%% open disk/closed disk
-%% open set
-%% closed set
-%% interior, limit points, closure, boundary 
-%% compact
-%% completeness
+Before we start talking about analysis in $\CC$, we should establish what the topology on $\CC$ is. It's not at all unfamiliar -- it's essentially just like $\RR^2$! Remember that the norm $\norm \cdot$ on $\CC$ that we looked at in the last section gives $\CC$ a metric space structure that looks almost exactly like the absolute value between points in $\RR^2$. Recall:
+\begin{definition}
+  A \textbf{metric space} is a space $X$ with a \textbf{distance function} $d: X \times X \to \RR$ such that the following three statements are true:
+  \begin{itemize}
+    \item For all $x, y \in X$, $d(x,y) \geq 0$ and $d(x,y) = 0 \Leftrightarrow x = y$.
+    \item For all $x, y \in X$, $d(x,y) = d(y,x)$.
+    \item For all $x, y, z \in X$, $d(x,y) + d(y,z) \geq d(x,z)$.
+  \end{itemize}
+\end{definition}
+Most of the analysis you have done so far has been in a metric space -- all your work in $\RR^n$ has been like this, and $\CC$ is no different.
+
+The following definitions should look familiar -- again, it's literally just like $\RR^2$!
+\begin{definition}
+  An \textbf{open disk} of radius $r$ around $z_0$ in $\CC$ is the set of points $D_r(z_0) = \braces{z \in \CC : |z - z_0| < r}$.
+\end{definition}
+\begin{definition}
+  A set $U \subseteq \CC$ is \textbf{open} if for every $z \in U$, there exists some $r > 0$ in $\RR$ such that $D_r(z_0) \subseteq U$.
+\end{definition}
+(Note that the ``in $\RR$'' is a little redundant, as $\CC$ cannot be totally ordered -- so if a total ordering is implied, we have should be assumed to be in $\RR$.)
+\begin{definition}
+  A set $V \subseteq \CC$ is \textbf{closed} if its complement $\CC - V$ is open.
+\end{definition}
+
+We also establish limits of sequences in pretty much the same way:
+\begin{definition}
+  A sequence of complex numbers $\braces{z_i}_{i=1}^\infty$ \textbf{converges} to some $w \in \CC$ iff \[ \forall \eps > 0, \exists \, n \in \NN : \forall n > N, |z_n - w| < \eps. \] If this is true, then we write $\lim_{n \to \infty} z_n = w$.
+\end{definition}
+It should be said that addition and multiplication of limits of sequences works exactly the same as in $\RR^n$.
+
+\begin{definition}
+  A point $w$ is a \textbf{limit point} of some set $U \subseteq \CC$ if there exists some sequence $\braces{z_n}$ in $U$ such that $\lim_{n \to \infty} z_n = w$.
+\end{definition}
+
+\begin{definition}
+  The \textbf{closure} of a set $U$ in $\CC$, $\ol U$, is the union of $U$ with all its limit points.
+
+  (As the name indicates, the closure of a set is closed -- this follows the same proof from Hubbard, more or less.)
+\end{definition}
+
+\begin{definition}
+  The \textbf{interior} of a set $U$, $\inter U$, is the set of all points $z \in U$ such that there exists some $D_r(z) \subseteq U$.
+\end{definition}
+
+\begin{definition}
+  The \textbf{boundary} of a set $U$ is $\closu U - \inter U$.
+\end{definition}
+
+Compactness topologically usually means dealing with open covers, but in a metric space, closedness and boundedness is enough:
+\begin{definition}
+  A set $U$ is \textbf{compact} if any cover of $U$ by open sets $\braces{U_\alpha}$ such that $U \subseteq \bigcup_\alpha U_\alpha$ has a finite subset of some $U_{\alpha_i}$ for $1 \leq i \leq n$ for some finite $n$ such that $U \subseteq \bigcup_{i=1}^n U_{\alpha_i}$. In other words, any open cover of $U$ has a finite subcover.
+
+  Equivalently, a compact set $U$ in $\CC$ is closed and bounded, just as in Hubbard. (These happen to be equivalent because we're in a metric space!)
+\end{definition}
+
+Finally, we should recall that $\CC$ is \textbf{complete}, just as $\RR$ is. This means that for any \textbf{Cauchy sequence} $\braces{z_n} \in \CC$ (meaning that for any $\eps > 0$, there exists $N \in \NN$ such that for any $m, n > N$, $|z_m - z_n| < \eps$) converges to some $z \in \CC$.
+
+Note that completeness is equivalent to the \textbf{nested compact set property}, which states that if we have a sequence of nested compact sets $U_1 \supseteq U_2 \supseteq \dots \supseteq U_n \subseteq \dots$, such that the diameters of these sets $\textrm{diam}(U_n) = \sup_{z, w \in U_n} |z - w|$ are a sequence converging to 0, then the intersection of all of these $U_i$ is non-empty.
+%% proof: https://math.stackexchange.com/questions/2386270/is-the-nested-set-property-equivalent-to-cauchy-completeness ?? but also in the book
+
+We will have a lot to say about \textbf{connectedness} as well. A set $U \subseteq \CC$ is connected if for any two $z, w \in U$ that there is a \textbf{path} joining $z$ and $w$ in $U$. In particular, this means there exists a continuous map $\gamma: [0,1] \to U$ such that $\gamma(0) = z$ and $\gamma(1) = w$. We will be very interested in paths, especially when we study integration.\footnote{This is actually not the proper definition of ``connected'' -- I've just given you the definition for ``path-connected''ness instead, which is a little stronger but are equivalent in $\CC$.}
+
+A special variety of a connected set is a \textbf{simply connected} set. A simply connected set can be thought of as a set that ``has no holes in the middle'', so that it's sort of convex. Rigorously, we'll say that $U$ is simply connected if it and its complement, $\CC - U$ are both connected.\footnote{Again, this actually isn't the full definition -- the real definition requires a little bit of homotopy. Basically, we want all loops in the set to be contractible to a point, so that loops are homotopy-equivalent to a constant map. This means that you can continuously deform a loop and squish it down into a point. This is a pretty important notion in algebraic topology, but as a loose concept it will be really important here for us in complex analysis.}
+%% connectedness
+
+%% simple connectedness
+
+Okay, that's enough topology. Hopefully most of this is review from 2230!
 
 \subsection{Limits and Continuity}
-It's literally just like $\RR^2$, consult Hubbard.
-%% sequences, convergence of sequences
-%% functions
+We now turn to a discussion of limits and continuity of functions in $\CC$, but again, it's literally just like $\RR^2$! But for completeness, we rehash the definitions here.
+
+\begin{definition}
+  Let $U \subseteq \CC$. A function $f : U \to \CC$ has a \textbf{limit} $w$ at $z_0$ if for all $\eps > 0$ there exists some $\delta > 0$ such that for all $z \in U$, \[ 0 < | z - z_0 | < \delta \Rightarrow |f(z) - w| < \eps .\] We say then that $\lim_{z \to z_0} f(z) = w$.
+\end{definition}
+\begin{definition}
+  If $U \subseteq \CC$, and $f : U \to \CC$, then $f$ is \textbf{continuous} at $z_0$ if $f(z_0) = \lim_{z \to z_0} f(z)$.
+\end{definition}
+A slight note here -- Hubbard's definition of a limit is slightly different/non-standard. Hubbard's condition is instead that $ | z - z_0 | < \delta \Rightarrow |f(z) - w| < \eps$, which essentially forces a limit to exist for $f$ at a point $z_0$ if and only if the function $f$ is just continuous at $z_0$. It's kinda nice, but it's a little strange, I guess.
+
+Of course, sequential continuity is equivalent to continuity -- if we have a sequence $\braces{z_n}$ converging to $z$ in $\CC$, and $f : U \to \CC$ where $U$ is some subset of $\CC$, $\lim_{n \to \infty} f(z_n) = f(z)$. Also, all the standard limit/continuity theorems for combining functions apply. Addition/multiplication/composition of limits behave as expected, and same with continuity.
+
 
 \subsection{Holomorphicity}
-We move to the notion of differentiability on $\CC$.
+We move to the notion of differentiability on $\CC$. Differentiability
 
 \begin{definition}
   Let $U$ be an open subset of $\CC$. A function $f : U \to \CC$ is \textbf{holomorphic} at $z_0 \in U$ if the limit $\lim_{z \to z_0} \frac{f(z) - f(z_0)}{z - z_0}$ exists. If it exists, the limit is denoted $f'(z_0)$, and is called the \textbf{derivative} of $f$ at $z_0$.
+
+  If this holds at every point $z_0 \in U$, then $f$ is said to be holomorphic on $U$.
 \end{definition}
 
-Naturally, this definition of the derivative follows the
+
+Naturally, this definition of the derivative follows the same rules as the real derivative -- it's linear, and follows the product rule and chain rules, with the proofs being roughly the same as in $\RR^2$.
+
+Here's where it starts to get weird. Let's investigate $f$ as a transformation from ``$\RR^2$'' to ``$\RR^2$''. In particular, if we think $f(x + iy) = u(x,y) + i v(x,y)$, then we have the following theorem about the real/imaginary parts of the function related to the real/imaginary parts of the input:
+\begin{theorem}[Cauchy-Riemann]
+  If $U \subseteq \CC$ is open, then $f : U \to \CC$ is holomorphic on $U$ iff \[ \pdv u x = \pdv v y \quad \pdv u y = - \pdv v x\] everywhere in $U$.
+  These equations are called the \textbf{Cauchy-Riemann equations} and can be used as a criterion for holomorphicity.
+\end{theorem}
+
+proof needed here
+%% Cauchy 
 
 \subsection{Power Series}
+One thing we will do extensively later on is talk about power series. Here, I'll briefly talk about power series and convergence and analyticity.
