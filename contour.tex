@@ -5,18 +5,47 @@ Arguably, the most important parts of complex analysis address the integration o
 \subsection{What is a Contour Integral?}
 But first -- what is a contour integral? If you're familiar with integrating along curves in $\RR^2$, you won't be surprised to see that we do essentially the same thing in $\CC$.
 
-First, what kinds of curves can we integrate along? We say $\gamma : [0,1] \to \CC$ is a smooth curve if
+First, what kinds of curves can we integrate along? Generally, we want to be able to integrate along smooth paths in $\CC$, but the definition of path we discussed in the previous section only has the ``continuous'' restriction. This means that if we were to stick only to paths, we would have to figure out how to deal with self-similar fractal curves and also space-filling Peano curves, and we really don't want to integrate along those. Stein-Shakarchi avoids the problem of dealing with this by essentially only considering curves that are okay for us integrate along to have only a finite number of non-smooth points, which is pretty much good enough for any reasonable purpose. We will actually go a smidge more general and talk instead about curves with finite arc length that can be approximated by line segments, which are called \textit{rectifiable curves}.
 
+Formally, we define a \textbf{rectifiable curve} in $\CC$ as a continuous function $\gamma : [0,1] \to \CC$ such that there is a continuous bijection $\vphi : [0,1] \to [0,1]$ such that $\vphi \circ \gamma$ is Lipschitz. The Lipschitz condition will be instrumental in showing that the length of such a curve will be finite when we integrate along it.\footnote{This source is what I'm referencing for this statement: \href{https://encyclopediaofmath.org/wiki/Rectifiable_curve}{Rectifiable curve}} Really, we should be considering equivalence classes of continuous functions $\gamma : [0,1] \to \CC$, such that $\gamma$ is in the same equivalence class as some other continuous $\gamma' : [0,1] \to \CC$ if we have a continuous bijection $\psi : [0,1] \to [0,1]$ such that $\gamma' = \psi \circ \gamma$. These equivalence classes are the actual curves $C$, which can be parameterized in possibly many ways (here, the $\gamma$ and $\gamma'$). We also call these rectifiable curves \textbf{contours}.
 
-Like in single-variable calculus, we have a \textbf{Fundamental Theorem of Contour Integrals}, which is a complex version of the Fundamental Theorem of Calculus:
+Okay, so let's suppose we have a contour $C$ as above, parameterized by some $\gamma: [0,1] \to \CC$. Then, we define the \textbf{contour integral} of $\int_C f(z) \, dz$ some complex-valued function $f : \CC \to \CC$ along $C$ by
+\[ \int_C f(z) \, dz = \lim_{n\to \infty} \sum_{k=1}^n f \left(\gamma\left(\frac k n \right)\right)  \cdot \left[\gamma \left(\frac k n\right) - \gamma\left(\frac{k-1} n \right) \right] = \int_0^1 f(\gamma(t)) \gamma'(t) \, dt .\]
+This should look really similar to the Riemann sum that you're used to, and you'll study this more in 2240 and get a glimpse as to why this real-valued integral converges when the curve is appropriately parameterized. (If you're concerned about the complex values of $f$, we could separate this into the real and imaginary parts and treat them separately, so this really reduces to the real-integral case.)
+
+We can now compute integrals via parameterization explicitly, but this isn't really going to be useful for us to develop, and often exercises for this involve integrating non-holomorphic functions, which is really similar to just computing a line integral and isn't going to be useful for us (as this method will not be used to actually compute integrals, 99\% of the time). Instead, let's start by developing some tools. Like in single-variable calculus, we have a \textbf{Fundamental Theorem of Contour Integrals}, which is a complex version of the Fundamental Theorem of Calculus:
+\begin{theorem}
+  Let $f : U \to \CC$ be a continuous function and $F : U \to \CC$ be holomorphic such that $F'(z) = f(z)$. Then, for a curve $\gamma$ that begins at $z_1$ and ends at $z_2$, we have that \[\int_\gamma f(z) \, dz = F(z_2) - F(z_1).\]
+\end{theorem}
+The proof of this is essentially the same as that as the Fundamental Theorem of Calculus in $\RR$.
+
+We will also be very interested in integrating around closed loops in $\CC$. A contour is \textbf{closed} if its endpoints are the same, i.e. if $\gamma : [0,1] \to \CC$ defines a contour $C$, then $C$ is closed if $\gamma(0) = \gamma(1)$, and a contour that is not self-intersecting is called \textbf{simple}. An example of a simple closed contour is the unit circle centered at the origin, which may be oriented in one of two different ways. We call the counterclockwise orientation of any loop the \textbf{positive} orientation by convention, and the clockwise orientation of a loop the \textbf{negative} orientation. Integrating along a closed loop in opposite orientations gives the negative answer.
+
+For instance, we can integrate the function $f(z) = \frac 1z$ around the unit circle counterlockwise, along contour $\gamma^+$ parameterized by $\gamma^+ : [0, 2\pi] \to \CC$, $\gamma^+(t) = e^{it}$ (we can easily rescale the parameterization to be on $[0,1]$ if desired):
+\[ \oint_{\gamma^+} \frac 1z \, dz = \int_0^{2\pi} \frac{i e^{it}}{e^{it}} \, dt = 2\pi i.\]
+Or, we can integrate the same function clockwise around the unit circle, along contour $\gamma^-$ parameterized by $\gamma^- : [0, 2\pi] \to \CC$, $\gamma^-(t) = e^{-it}$:
+\[ \oint_{\gamma^-} \frac 1z \, dz = \int_0^{2\pi} \frac{-i e^{-it}}{e^{-it}} \, dt = -2\pi i.\]
+Note that we denote integrating around a closed contour with the $\oint$ integration symbol as opposed to the regular $\int$ sign, as the circle denotes that we're integrating around a loop.
+
+We can apply the Fundamental Theorem of Calculus above for contour integrals to get a useful-ish result for closed contours:
+\begin{corollary}
+  If $f : U \to \CC$ is continuous and there exists some $F : U \to \CC$ such that $F$ is holomorphic on $U$ and $F'(z) = f(z)$, then if $C$ is a closed contour contained in $U$, then \[\oint_C f(z) \, dz = 0.\]
+\end{corollary}
+Note that this result does NOT apply to our example above! If we wanted to construct the antiderivative of $\frac 1z$ as $\Log z$, remember that the $\Log$ function has a branch cut along the negative real axis and a branch point at 0! There does not exist a domain on which this antiderivative is holomorphic that contains the domain, as the branch cut must cross the path.
 
 \subsection{The Cauchy-Goursat Theorem}
-\begin{theorem}
-
+The theorem that follows is possibly the most important theorem in complex analysis. It's the first of the three ``miracles'' of smooth functions that
+\begin{theorem}[Cauchy-Goursat]
+  Let $U$ be an open and simply connected subset of $\CC$ and $f : U \to \CC$ be holomorphic on $U$. Then, for any simple closed contour $C$ contained in $U$, we have that \[\oint_C f(z) \, dz = 0.\]
 \end{theorem}
 
 \subsubsection{A Note on Homotopy}
 
 
 \subsection{Integral Formulas}
+As a result of Cauchy-Goursat, we deduce the following result --
+\begin{theorem}[Cauchy's Integral Formula]
+  Let $U$ be open an open and simply connected subset of $\CC$ and $f : U \to \CC$ be holomorphic on $U$. Then, for any simple closed contour $C$ and some $z_0$ in the interior of $C$, we have that \[f(z_0) = \oint_C \frac{f(z)}{z-z_0} \, dz. \]
+\end{theorem}
 
+\subsection{Miracles (Consequences of CIF)}
