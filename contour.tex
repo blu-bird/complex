@@ -118,7 +118,14 @@ As such, we have the corollary that holomorphic functions are therefore analytic
   A function that is entire and bounded in magnitude is constant.
 \end{theorem}
 
-%% Corollary: Fundamental Theorem of Algebra 
+%% Corollary: Fundamental Theorem of Algebra (not stupid)
+\begin{corollary}[The Fundamental Theorem of Algebra, Again (Stein-Shakarchi)]
+  % suppose for sake of contradiction p(z) has no zeroes
+  % then 1/p is entire
+  % can also bound 1/p 
+  % therefore 1/p is constant, but this is literally not the case
+  % EZ
+\end{corollary}
 
 %% Morera's Theorem
 Morera's Theorem is like a converse to Cauchy-Goursat -- it tells us when a function is holomorphic based on its loop integrals:
@@ -147,5 +154,13 @@ This is a strengthening of the idea that ``a continuous function on a compact se
   Let $f : U \to \CC$ be holomorphic on an open set $U \subseteq \CC$. $f$ has no maximum modulus on $U$. Equivalently, if we have a closed subset $D \subseteq U$, then the maximum modulus of $f$ on $D$ must be achieved on the boundary of $D$.
 \end{theorem}
 
+\begin{corollary}[The Fundamental Theorem of Algebra, Again (Osborne)]
+  % suppose for sake of contradiction p(z) has no zeroes
+  % then 1/p is entire
+  % consider a disk of radius R centered at origin, and maximum modulus of 1/p must be on the boundary 
+  % polynomials get large in modulus for large R, so as R gets large the modulus of 1/p near the boundary of this disk is zero
+  % exists an R for which 1/p(0) is larger than the modulus on the boundary
+  % EZ
+\end{corollary}
 
 
