@@ -1,0 +1,56 @@
+\section{Residues and Applications}
+
+\subsection{The Residue Formula}
+
+\subsection{Evaluation of Real Integrals and Series}
+This is going to be a collection of examples that highlight the most common strategies for computing real integrals with complex analysis.
+
+% basic example
+\begin{example}
+  Evaluate \[\int_{-\infty}^{\infty} \frac 1{1 + x^2} \, dx.\]
+\end{example}
+You can do this with standard integration techniques, but let's see complex analysis at work.
+\begin{solution}
+  Consider the closed semicircular contour $\Gamma_R$ that runs from $-R$ to $R$ on the real axis, where this contour  closes in the upper half-plane along the semicircular arc $C_R$. Let $R > 1$. Let's consider the integral of $f(z) = \frac 1{1+z^2}$ along $\Gamma_R$:
+  \[ \oint_{\Gamma_R} f(z) \, dz = \int_{-R}^R f(x) \, dx + \int_{C_R} f(z) \, dz.\]
+  The loop integral is easy to evaluate, actually -- we can even do it with Cauchy's integral formula. Let's let $g(z) = \frac 1{z+i}$, and note that $g(z)$ is holomorphic on the interior of the contour $\Gamma_R$, so Cauchy's integral formula applies:
+  \[\oint_{\Gamma_R} f(z) \, dz = \oint_{\Gamma_R} \frac{g(z)}{z-i} \, dz = 2\pi i \cdot g(i) = 2\pi i \cdot \frac 1{2i} = \pi.\]
+  This is true regardless of what $R$ we pick.
+
+  It suffices to see what happens with the other integral, $\int_{C_R} f(z) \, dz$. Let's do some bounding with the ML Lemma. Since we're integrating along part of the circle $|z| = R$, note that using the Triangle Inequality, we get
+  \[ \abs{1 + z^2} + \abs{-1} \geq \abs{z^2} \Rightarrow \abs{1+z^2} \geq \abs{z}^2 - 1 = R^2 - 1 \Rightarrow \frac 1{R^2 - 1} \geq \frac 1{\abs{1+z^2}} = |f(z)|.\]
+  Then, we can use the ML Lemma on the integral along the arc:
+  \[ \abs{\int_{C_R} f(z) \, dz} \leq \frac 1{R^2 - 1} \cdot 2\pi R = \frac{2\pi R}{R^2 - 1}.\]
+  Notice that as $R$ gets arbitrarily large, the magnitude of this integral can be made to be smaller than any $\eps > 0$, so as we take the limit as $R \to \infty$, this integral must go to zero, so we get that
+  \[\pi = \lim_{R \to \infty} \int_{-R}^R \frac 1{1 + x^2} \, dx + 0 = \int_{-\infty}^\infty \frac 1{1+x^2} \, dx\]
+  as expected.
+\end{solution}
+Of course, this is equivalent to evaluating the residue at $i$, but we're using low-power techniques just because we can.
+
+\begin{example}
+  Evaluate \[\int_{-\infty}^{\infty} \frac{\cos x}{x^2 + 1}\, dx.\]
+\end{example}
+\begin{solution}
+  We consider instead the integral of $f(z) = \frac{e^{iz}}{z^2 + 1}$ along the same closed semicircular contour $\Gamma_R$ as above. Again, with Cauchy's Integral Formula, we have
+  \[ \oint_{\Gamma_R} f(z) \, dz = \oint_{\Gamma_R} \frac{\frac{e^{iz}}{z+i}}{z-i} \, dz = 2\pi i \cdot \frac{e^{-1}}{2i} = \frac{\pi} e .\]
+
+  Now, we examine what happens when we break up this integral into the part along the real axis and the semicircular part. The real axis will eventually turn into what we want, so let's look at the modulus of the contour integral along the semicircular part. This calls for Jordan's Lemma:
+  \[
+    \abs{\int_{C_R} \frac{e^{iz}}{z^2 + 1} \, dz} \leq \frac{\pi}{R^2 - 1}
+  \]
+  using the same bound on $\frac 1{\abs{z^2 +1}}$ as above. Again, note that as $R$ gets arbitrarily large, the magnitude of this integral tends to zero, so in the limit as $R \to \infty$, we have that
+  \[ \oint_{\Gamma_R} f(z) \, dz = \int_{-R}^R \frac{e^{ix}}{x^2 + 1} \, dx + \int_{C_R} \frac{e^{iz}}{z^2 + 1} \, dz \to \frac \pi e = \int_{-\infty}^\infty \frac{e^{ix}}{x^2 + 1} \, dx + 0 .\]
+  Taking the real part of this last equation, we see that $\int_{-\infty}^\infty \frac{\cos x}{x^2 + 1} \, dx = \frac \pi e$, which is a rather exotic result!
+\end{solution}
+
+\subsubsection{Integrals For You to Try}
+\begin{itemize}
+  \item
+\end{itemize}
+
+\subsection{The Argument Principle and Rouch\'{e}'s Theorem}
+
+
+\subsubsection{That Proof of the Fundamental Theorem of Algebra in Hubbard, Done Properly}
+Hubbard's proof of the Fundamental Theorem of Algebra is quite jank, and it's because he essentially goes to try and prove Rouche's Theorem as an intermediate step using only real-analytical tools, which is kinda weird, not gonna lie! Here's the proof as it should be.
+

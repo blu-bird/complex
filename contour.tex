@@ -33,11 +33,57 @@ We can apply the Fundamental Theorem of Calculus above for contour integrals to 
 \end{corollary}
 Note that this result does NOT apply to our example above! If we wanted to construct the antiderivative of $\frac 1z$ as $\Log z$, remember that the $\Log$ function has a branch cut along the negative real axis and a branch point at 0! There does not exist a domain on which this antiderivative is holomorphic that contains the domain, as the branch cut must cross the path.
 
+\subsection{Integral Bounds}
+Often, in the course of proofs or calculations we will need to construct bounds on integrals, so we will develop a couple of cool tricks here.
+
+The most important of these is the \textbf{ML Lemma}:
+\begin{theorem}[ML Lemma]
+  Suppose $C$ is a rectifiable contour with length $L$ in some open $U \subseteq \CC$, and let the maximum modulus of some continuous function $f : U \to \CC$ on $U$ be $M$. Then, \[\abs{\int_C f(z) \, dz} \leq ML .\]
+\end{theorem}
+Note that the maximum exists as the contour is a compact subset of $\CC$.
+
+The proof of this is fairly straightforward, using the triangle inequality and the limit definition of the contour integral:
+\begin{proof}
+  \begin{align*}
+    \abs{\int_C f(z) \, dz}
+     & = \abs{ \lim_{n\to \infty} \sum_{k=1}^n f \left(\gamma\left(\frac k n \right)\right)  \cdot \left[\gamma \left(\frac k n\right) - \gamma\left(\frac{k-1} n \right) \right] }           \\
+     & \leq  \lim_{n\to \infty} \sum_{k=1}^n \abs{ f \left(\gamma\left(\frac k n \right)\right)}  \cdot \abs{\left[\gamma \left(\frac k n\right) - \gamma\left(\frac{k-1} n \right) \right] } \\
+     & \leq M \lim_{n\to \infty} \sum_{k=1}^n \abs{\left[\gamma \left(\frac k n\right) - \gamma\left(\frac{k-1} n \right) \right] }                                                           \\
+     & \leq M L
+  \end{align*}
+\end{proof}
+This is an incredibly useful bound, and it's used in many proofs and computations.
+
+Another bound that's useful mostly for computational purposes is \textbf{Jordan's Lemma}, which applies particularly to semicircular contours in the upper half-plane:
+\begin{theorem}[Jordan's Lemma]
+  Let $C_R$ be the contour $\braces{R e^{it} : t \in [0, \pi]}$ for $R > 0$ real, and let $f : \CC \to \CC$ be continuous on $C_R$ with $|f(z)|$ bounded by $M_R$ on $C_R$. Then, \[ \abs{\int_{C_R} f(z) e^{iz} \, dz} \leq M_R \pi  .\]
+\end{theorem}
+\begin{proof}
+  \begin{align*}
+    \abs{\int_{C_R} f(z) \, dz}
+     & = \abs{\int_0^\pi f(Re^{it}) e^{i Re^{it}} \cdot iR e^{it} \, dt} = \abs{\int_0^\pi f(Re^{it}) e^{i R(\cos t + i \sin t)} \cdot iR e^{it} \, dt} \\
+     & \leq \int_0^\pi \abs{f(Re^{it}) e^{i R\cos t} \cdot e^{-R \sin t} \cdot iR e^{it}} \, dt                                                         \\
+     & = R \int_0^\pi \abs{f(Re^{it})}  \cdot \abs{e^{-R \sin t}} \, dt                                                                                 \\
+     & \leq M_R R \int_0^\pi \abs{e^{-R \sin t}} \, dt = 2M_R R \int_0^{\frac \pi 2} \abs{e^{-R \sin t}} \, dt
+  \end{align*}
+  It suffices to find a good bound for $e^{-R \sin t}$. Note that since $\sin t \geq \frac 2 \pi t$ on $[0, \frac \pi 2]$, that therefore $e^{-R \sin t} \leq e^{-\frac 2 \pi t}$. We can thus finish up the bounding:
+  \begin{align*}
+    \abs{\int_{C_R} f(z) \, dz} \leq 2M_R R \int_0^{\frac \pi 2} e^{-R \sin t} \, dt \leq 2 M_R R \int_0^{\frac \pi 2} e^{-\frac{2R}{\pi} t} \, dt = \frac{2 M_R R \pi}{2R} \left( 1 - e^{-R} \right) = M_R \pi \left( 1 - e^{-R} \right) \leq M_R \pi \\
+  \end{align*}
+\end{proof}
+
+
+
 \subsection{The Cauchy-Goursat Theorem}
 The theorem that follows is possibly the most important theorem in complex analysis. It's the first of the three ``miracles'' of smooth functions that
 \begin{theorem}[Cauchy-Goursat]
-  Let $U$ be an open and simply connected subset of $\CC$ and $f : U \to \CC$ be holomorphic on $U$. Then, for any simple closed contour $C$ contained in $U$, we have that \[\oint_C f(z) \, dz = 0.\]
+  Let $U$ be an open and \textbf{simply connected} subset of $\CC$ and $f : U \to \CC$ be holomorphic on $U$. Then, for any simple closed contour $C$ contained in $U$, we have that \[\oint_C f(z) \, dz = 0.\]
 \end{theorem}
+
+This is a pretty hard theorem to prove rigorously... common attempts involve using Green's Theorem, but this assumes that $f$ has to have continuous real and imaginary partials with respect to the real/imaginary parts of the inputs, which is... not necessarily known? It actually turns out this is a little circular, but it's not a bad method of verifying the theorem, I guess.
+
+The proper way was created by Goursat, and his proof is the one I will sketch out here.
+
 
 \subsubsection{A Note on Homotopy}
 
@@ -45,7 +91,61 @@ The theorem that follows is possibly the most important theorem in complex analy
 \subsection{Integral Formulas}
 As a result of Cauchy-Goursat, we deduce the following result --
 \begin{theorem}[Cauchy's Integral Formula]
-  Let $U$ be open an open and simply connected subset of $\CC$ and $f : U \to \CC$ be holomorphic on $U$. Then, for any simple closed contour $C$ and some $z_0$ in the interior of $C$, we have that \[f(z_0) = \oint_C \frac{f(z)}{z-z_0} \, dz. \]
+  Let $U$ be an open and simply connected subset of $\CC$ and $f : U \to \CC$ be holomorphic on $U$. Then, for any simple closed contour $C$ and some $z_0$ in the interior of $C$, we have that \[f(z_0) = \frac 1{2\pi i}\oint_C \frac{f(z)}{z-z_0} \, dz. \]
 \end{theorem}
 
-\subsection{Miracles (Consequences of CIF)}
+\begin{theorem}[Cauchy's Integral Formula For Derivatives]
+  Let $U$ be an open and simply connected subset of $\CC$ and $f : U \to \CC$ be holomorphic on $U$. Then, for any simple closed contour $C$ and some $z_0$ in the interior of $C$, we have that \[f^{(n)}(z_0) = \frac {n!}{2\pi i}\oint_C \frac{f(z)}{(z-z_0)^{n+1}} \, dz. \]
+\end{theorem}
+
+\subsection{Miracles (Consequences of CIF and Friends)}
+%% Taylor's Theorem
+\begin{theorem}[Taylor's Theorem]
+  Suppose $f : U \to \CC$ is holomorphic on open set $U \subseteq \CC$. Then, for any $z_0 \in U$, there exists an open disk $D$ whose closure is contained in $U$ where $f$ has a power series expansion centered at $z_0$:
+  \[ f(z) = \sum_{k = 0}^\infty a_k (z-z_0)^k, \quad a_k = \frac{f^{(k)}(z_0)}{k!}.\]
+  This power series expansion converges to $f$ for every point $z \in D$.
+\end{theorem}
+
+%% INFINITE DIFFERENTIABILTY WOOOOOO
+\begin{corollary}[Infinite differentiability]
+  A function $f : U \to \CC$ holomorphic in some open set $U \subseteq \CC$ is infinitely differentiable on $U$.
+\end{corollary}
+% uses CIFFD
+As such, we have the corollary that holomorphic functions are therefore analytic, by Taylor's Theorem (the complex version). In particular, this means that holomorphic $\Leftrightarrow$ analytic, so we will use the words interchangably from here on out.
+
+%% Liouville's Theorem 
+\begin{theorem}[Liouville's Theorem]
+  A function that is entire and bounded in magnitude is constant.
+\end{theorem}
+
+%% Corollary: Fundamental Theorem of Algebra 
+
+%% Morera's Theorem
+Morera's Theorem is like a converse to Cauchy-Goursat -- it tells us when a function is holomorphic based on its loop integrals:
+\begin{theorem}[Morera's Theorem]
+  Let $f : D \to \CC$ be continuous in some open set $D \subseteq \CC$ such that for every simple closed rectifiable contour $C$ contained in $D$, $\oint_C f(z) \, dz = 0$. Then $f$ is holomorphic on $D$.
+\end{theorem}
+
+%% Analytic continuation (follows Stein-Shakarchi)
+The third miracle as advertised in Stein-Shakarchi is the idea of \textbf{analytic continuation}, where one may construct extensions of analytic functions.
+\begin{theorem}[Continuation of Zero]
+  Suppose $f$ is a holomorphic function on some open connected $U \subseteq \CC$ that vanishes on a sequence of distinct points $\braces{z_k}_{k=1}^\infty$ such that $z_k \in U$. If this sequence $\braces{z_k}$ has a limit point, then $f = 0$ on $U$.
+\end{theorem}
+
+\begin{corollary}[Analytic Continuation]
+  Suppose $f, g : U \to \CC$ are holomorphic on some open connected $U \subseteq \CC$. Suppose $V \subseteq U$ is open and $f(z) = g(z)$ for all $z \in V$ (or, even some sequence of distinct points with limit point in $U$). Then, $f(z) = g(z)$ for all $z \in U$.
+\end{corollary}
+We can use this theorem to show the existence of or even construct analytic extensions of functions. Suppose we have holomorphic functions $F : U \to \CC$ and $f : V \to \CC$ where $V \subseteq U \subseteq \CC$. If $F = f$ on $V$, then we know that $F$ is a (unique) analytic continuation of $f$ into $U$.
+
+%% Maximum Modulus Principle 
+This is a strengthening of the idea that ``a continuous function on a compact set obtains its maximum or minimum'' that is true in $\CC$. First, a lemma:
+\begin{lemma}
+  Let $U$ be an open neighborhood of a point $z_0 \in \CC$ and $f$ be holomorphic on $U$. Then, if $|f(z_0)| \geq |f(z)|$ for all $z \in U$, then $f$ is constant on $U$.
+\end{lemma}
+
+\begin{theorem}[Maximum Modulus Principle]
+  Let $f : U \to \CC$ be holomorphic on an open set $U \subseteq \CC$. $f$ has no maximum modulus on $U$. Equivalently, if we have a closed subset $D \subseteq U$, then the maximum modulus of $f$ on $D$ must be achieved on the boundary of $D$.
+\end{theorem}
+
+
+
